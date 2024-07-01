@@ -1,0 +1,69 @@
+import random
+
+#Objective
+colors = ['blue', 'yellow', 'green', 'red']
+
+print("The colors are as follows: ")
+for i in range (len(colors)):
+  print(str(i+1)+".", colors[i].capitalize())
+print()
+print("Guess the correct position of each color in the arrangement below: ")
+
+for i in range (len(colors)):
+  print("_", end=' ')
+print()
+print()
+
+
+#creating a randomized sequence
+new_col = colors.copy()
+seq=[]
+
+while (len(new_col))>0:
+  col=random.choice(new_col)
+  seq.append(col)
+  new_col.remove(col)
+
+
+
+#Game Logic
+def game():
+  #Allowed guesses
+  u_guess=[]
+
+  i = 0
+  while i < len(colors):
+      guess = input("Enter a color: ").lower()
+      if guess not in colors:
+          print("\nNot a valid guess")
+      elif guess in u_guess:
+          print("\nColor already guessed")
+      else:
+          u_guess.append(guess)
+          i += 1
+
+
+
+  # Checking
+  if seq != u_guess:
+    print()
+    for i in range (len(colors)):
+      if seq[i] != u_guess[i]:
+        print("_", end="   ")
+      else:
+        print(seq[i].upper(), end="   ")
+    print()
+
+  else:
+    print()
+    print("You got it right!")
+    for i in range (len(colors)):
+      print(seq[i].upper(), end="   ")
+  print()
+
+  return seq, u_guess
+
+#Play the game until the sequence matches
+seq, u_guess = game()
+while seq != u_guess:
+    seq, u_guess = game()
